@@ -1,0 +1,668 @@
+/* ==========================================================================
+   Shared page header for Games / Memory Match pages
+   ========================================================================== */
+
+.games-page-header {
+  margin-bottom: 4px;
+}
+
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  min-height: 52px;
+  padding: 10px 20px;
+  margin-bottom: 16px;
+  background-color: var(--color-card);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-input);
+  color: var(--color-text-primary);
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.back-btn:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+/* ==========================================================================
+   Difficulty badge on game cards
+   ========================================================================== */
+
+.game-card-difficulty {
+  display: inline-block;
+  align-self: flex-start;
+  background-color: rgba(15, 118, 110, 0.1);
+  color: var(--color-secondary);
+  font-size: 16px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 999px;
+  margin-bottom: 16px;
+}
+
+/* ==========================================================================
+   Placeholder game page ("Coming Soon")
+   ========================================================================== */
+
+.game-placeholder-container {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: 48px 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+/* ==========================================================================
+   Memory Match - stats bar
+   ========================================================================== */
+
+.memory-container {
+  max-width: 680px;
+}
+
+.memory-stats {
+  display: flex;
+  gap: 16px;
+  background-color: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: 20px 24px;
+  flex-wrap: wrap;
+}
+
+.memory-stat {
+  flex: 1;
+  min-width: 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: center;
+}
+
+.memory-stat-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.memory-stat-label {
+  font-size: 16px;
+  color: var(--color-text-secondary);
+}
+
+/* ==========================================================================
+   Memory Match - card grid
+   ========================================================================== */
+
+.memory-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.memory-card {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-primary);
+  border: 2px solid var(--color-primary-dark);
+  border-radius: var(--radius-input);
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+  padding: 0;
+}
+
+.memory-card:hover:not(:disabled) {
+  transform: scale(1.02);
+}
+
+.memory-card:disabled {
+  cursor: default;
+}
+
+.memory-card-hidden {
+  font-size: 28px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.memory-card-revealed {
+  background-color: var(--color-card);
+  border-color: var(--color-border);
+}
+
+.memory-card-symbol {
+  font-size: 40px;
+  line-height: 1;
+}
+
+.memory-card-matched {
+  background-color: rgba(22, 163, 74, 0.08);
+  border-color: var(--color-success);
+}
+
+.memory-card-check {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-success);
+  color: #ffffff;
+  font-size: 13px;
+  border-radius: 50%;
+}
+
+/* ==========================================================================
+   Memory Match - completion screen
+   ========================================================================== */
+
+.game-result-card {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: 32px 24px;
+  text-align: center;
+}
+
+.game-result-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin: 0 0 8px 0;
+}
+
+.game-result-subtitle {
+  font-size: 18px;
+  color: var(--color-text-secondary);
+  margin: 0 0 24px 0;
+}
+
+.game-result-stats {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+
+.game-result-stat {
+  min-width: 130px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background-color: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-input);
+  padding: 16px;
+}
+
+.game-result-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.game-result-label {
+  font-size: 16px;
+  color: var(--color-text-secondary);
+}
+
+.game-result-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 640px) {
+  .memory-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .memory-card-symbol {
+    font-size: 32px;
+  }
+
+  .memory-card-hidden {
+    font-size: 24px;
+  }
+
+  .memory-stats {
+    padding: 16px;
+  }
+
+  .game-result-card {
+    padding: 24px 18px;
+  }
+}
+
+/* ==========================================================================
+   Shared Cognitive Games (Pattern, Object, Routine)
+   ========================================================================== */
+
+.quiz-game-container {
+  max-width: 720px;
+}
+
+.game-card-body {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Progress Bar Component */
+
+.game-progress-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.game-progress-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 18px;
+  color: var(--color-text-secondary);
+}
+
+.game-progress-text strong {
+  color: var(--color-text-primary);
+  font-size: 20px;
+}
+
+.game-progress-percentage {
+  font-weight: 700;
+  color: var(--color-primary);
+  font-size: 18px;
+}
+
+.game-progress-bar-bg {
+  height: 12px;
+  background-color: rgba(37, 99, 235, 0.12);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.game-progress-bar-fill {
+  height: 100%;
+  background-color: var(--color-primary);
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+/* Question Cards & Prompts */
+
+.question-prompt-label {
+  display: block;
+  font-size: 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-text-muted);
+  margin-bottom: 10px;
+}
+
+/* Pattern Recognition Display */
+
+.pattern-question-card {
+  text-align: center;
+}
+
+.pattern-sequence-display {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 24px 16px;
+  background-color: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+}
+
+.pattern-item-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pattern-item-box {
+  width: 64px;
+  height: 64px;
+  background-color: #ffffff;
+  border: 2px solid var(--color-border);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.pattern-question-box {
+  border: 2px dashed var(--color-primary);
+  background-color: rgba(37, 99, 235, 0.06);
+  color: var(--color-primary);
+  font-weight: 700;
+  font-size: 32px;
+}
+
+.pattern-arrow {
+  font-size: 22px;
+  color: var(--color-text-muted);
+  font-weight: 700;
+}
+
+/* Object Recognition Display */
+
+.object-question-card {
+  text-align: center;
+  padding: 28px 20px;
+  background-color: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+}
+
+.object-symbol-display {
+  font-size: 96px;
+  line-height: 1;
+  margin-bottom: 16px;
+}
+
+.object-question-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+/* Routine Recall Display */
+
+.routine-activities-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.routine-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 12px;
+}
+
+.routine-activity-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 10px;
+  background-color: var(--color-background);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-input);
+  gap: 8px;
+  text-align: center;
+}
+
+.routine-activity-icon {
+  font-size: 38px;
+  line-height: 1;
+}
+
+.routine-activity-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.routine-question-box {
+  padding: 18px 20px;
+  background-color: rgba(15, 118, 110, 0.08);
+  border: 1px solid rgba(15, 118, 110, 0.25);
+  border-radius: var(--radius-input);
+  text-align: center;
+}
+
+.routine-question-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-secondary);
+  margin: 0;
+}
+
+/* Answer Choices Grid & Buttons */
+
+.answer-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.answer-section-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  margin: 0 0 12px 0;
+}
+
+.answer-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.answer-btn {
+  min-height: 56px;
+  padding: 14px 20px;
+  background-color: var(--color-card);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-input);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  position: relative;
+}
+
+.answer-btn-text-mode {
+  font-size: 18px;
+  justify-content: flex-start;
+  padding: 16px 20px;
+}
+
+.answer-btn-icon {
+  font-size: 26px;
+}
+
+.answer-emoji {
+  font-size: 32px;
+  line-height: 1;
+}
+
+.answer-text {
+  flex: 1;
+  text-align: left;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.answer-btn:hover:not(:disabled) {
+  border-color: var(--color-primary);
+  background-color: rgba(37, 99, 235, 0.04);
+}
+
+.answer-btn-selected {
+  border-color: var(--color-primary);
+  background-color: rgba(37, 99, 235, 0.08);
+}
+
+.answer-btn-correct {
+  border-color: var(--color-success) !important;
+  background-color: rgba(22, 163, 74, 0.1) !important;
+  color: #15803d !important;
+  font-weight: 700;
+}
+
+.answer-btn-incorrect {
+  border-color: var(--color-danger) !important;
+  background-color: rgba(220, 38, 38, 0.1) !important;
+  color: #b91c1c !important;
+  font-weight: 700;
+}
+
+.answer-btn-disabled {
+  opacity: 0.65;
+  cursor: default;
+}
+
+.answer-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  font-size: 16px;
+  font-weight: 800;
+  margin-left: auto;
+}
+
+.badge-correct-icon {
+  background-color: var(--color-success);
+  color: #ffffff;
+}
+
+.badge-incorrect-icon {
+  background-color: var(--color-danger);
+  color: #ffffff;
+}
+
+/* Feedback Panel */
+
+.game-feedback-card {
+  padding: 22px 24px;
+  border-radius: var(--radius-card);
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.feedback-correct {
+  background-color: rgba(22, 163, 74, 0.08);
+  border: 2px solid var(--color-success);
+}
+
+.feedback-incorrect {
+  background-color: rgba(220, 38, 38, 0.08);
+  border: 2px solid var(--color-danger);
+}
+
+.feedback-content {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.feedback-badge {
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.feedback-badge.badge-success {
+  background-color: var(--color-success);
+}
+
+.feedback-badge.badge-error {
+  background-color: var(--color-danger);
+}
+
+.feedback-text-container {
+  flex: 1;
+}
+
+.feedback-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 6px 0;
+  color: var(--color-text-primary);
+}
+
+.feedback-correct-answer {
+  font-size: 18px;
+  color: var(--color-text-primary);
+  margin: 0 0 6px 0;
+}
+
+.feedback-explanation {
+  font-size: 17px;
+  color: var(--color-text-secondary);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.feedback-next-btn {
+  min-height: 52px;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+@media (max-width: 640px) {
+  .answer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pattern-sequence-display {
+    padding: 16px 10px;
+    gap: 8px;
+  }
+
+  .pattern-item-box {
+    width: 52px;
+    height: 52px;
+    font-size: 26px;
+  }
+
+  .object-symbol-display {
+    font-size: 72px;
+  }
+
+  .game-card-body {
+    padding: 20px 16px;
+  }
+}
+
