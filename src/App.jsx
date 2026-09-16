@@ -17,8 +17,12 @@ import Reminders from './pages/Reminders.jsx'
 import Emergency from './pages/Emergency.jsx'
 
 function App() {
+  const basename = import.meta.env.BASE_URL
+    ? import.meta.env.BASE_URL.replace(/\/$/, '')
+    : ''
+
   return (
-    <BrowserRouter basename={import.meta.env.BASE_URL}>
+    <BrowserRouter basename={basename}>
       <Routes>
         <Route path="/" element={<Navigate to="/login" replace />} />
         <Route path="/login" element={<Login />} />
