@@ -2,10 +2,12 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import EmergencyActionCard from '../components/EmergencyActionCard.jsx'
 import ConfirmationModal from '../components/ConfirmationModal.jsx'
+import { useLanguage } from '../context/LanguageContext.jsx'
 import '../styles/dashboard.css'
 
 function Emergency() {
   const navigate = useNavigate()
+  const { t } = useLanguage()
   const [activeModal, setActiveModal] = useState(null) // 'caregiver' | 'emergency' | null
   const [isSimulating, setIsSimulating] = useState(false)
 
@@ -35,31 +37,31 @@ function Emergency() {
           type="button"
           className="back-btn"
           onClick={() => navigate('/patient')}
-          aria-label="Back to dashboard"
+          aria-label={t('backToDashboard')}
         >
-          ← Back to Dashboard
+          {t('backToDashboard')}
         </button>
 
         <div className="emergency-header-section">
-          <h1 className="dash-greeting">Need Help?</h1>
-          <p className="dash-subtext">Choose who you want to contact.</p>
+          <h1 className="dash-greeting">{t('needHelp')}</h1>
+          <p className="dash-subtext">{t('chooseContact')}</p>
         </div>
 
         <div className="emergency-action-cards-grid">
           <EmergencyActionCard
             icon="👨‍👩‍👧"
-            title="Call Caregiver"
-            description="Contact your registered caregiver for assistance or routine help."
-            buttonText="Call Caregiver"
+            title={t('callCaregiver')}
+            description={t('callCaregiverDesc')}
+            buttonText={t('callCaregiver')}
             isDanger={false}
             onAction={handleOpenCaregiver}
           />
 
           <EmergencyActionCard
             icon="🚨"
-            title="Emergency Help"
-            description="Get immediate emergency assistance in case of an urgent medical situation."
-            buttonText="Emergency Help"
+            title={t('emergencyHelp')}
+            description={t('emergencyHelpDesc')}
+            buttonText={t('emergencyHelp')}
             isDanger={true}
             onAction={handleOpenEmergency}
           />
@@ -68,27 +70,27 @@ function Emergency() {
         {/* Caregiver Confirmation Modal */}
         <ConfirmationModal
           isOpen={activeModal === 'caregiver'}
-          title="Call Caregiver"
-          message="Do you want to call your registered caregiver now?"
-          confirmText="Yes, Call Caregiver"
+          title={t('callCaregiver')}
+          message={t('confirmCallCaregiverMsg')}
+          confirmText={t('yesCallCaregiver')}
           confirmVariant="primary"
           onConfirm={handleConfirmCall}
           onCancel={handleCloseModal}
           isSimulating={isSimulating}
-          simulatedMessage="Calling your caregiver Ramesh (Simulated Call). Please hold on..."
+          simulatedMessage={t('simulatingCaregiverCall')}
         />
 
         {/* Emergency Assistance Confirmation Modal */}
         <ConfirmationModal
           isOpen={activeModal === 'emergency'}
-          title="Emergency Assistance"
-          message="Are you sure you want to trigger Emergency Help? Your caregiver and local emergency contacts will be notified."
-          confirmText="Yes, Send Emergency Help"
+          title={t('emergencyAssistanceTitle')}
+          message={t('confirmEmergencyMsg')}
+          confirmText={t('yesSendEmergencyHelp')}
           confirmVariant="danger"
           onConfirm={handleConfirmCall}
           onCancel={handleCloseModal}
           isSimulating={isSimulating}
-          simulatedMessage="Emergency Alert Dispatched! Caregiver and Medical Response team notified (Simulated Action)."
+          simulatedMessage={t('simulatingEmergencyCall')}
         />
       </div>
     </div>
@@ -96,3 +98,4 @@ function Emergency() {
 }
 
 export default Emergency
+

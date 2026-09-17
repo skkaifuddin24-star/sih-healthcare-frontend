@@ -2,17 +2,19 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import ToggleSwitch from '../components/ToggleSwitch.jsx'
 import LanguageSelector from '../components/LanguageSelector.jsx'
+import { useLanguage } from '../context/LanguageContext.jsx'
 import '../styles/dashboard.css'
 
 const LANGUAGES = [
-  { label: 'English', nativeName: 'English', value: 'English' },
-  { label: 'Hindi', nativeName: 'हिंदी', value: 'Hindi' },
-  { label: 'Bengali', nativeName: 'বাংলা', value: 'Bengali' },
-  { label: 'Assamese', nativeName: 'অসমীয়া', value: 'Assamese' },
+  { label: 'English', nativeName: 'English', value: 'en' },
+  { label: 'Hindi', nativeName: 'हिंदी', value: 'hi' },
+  { label: 'Bengali', nativeName: 'বাংলা', value: 'bn' },
+  { label: 'Assamese', nativeName: 'অসমীয়া', value: 'as' },
 ]
 
 function Settings() {
   const navigate = useNavigate()
+  const { language, setLanguage, t } = useLanguage()
 
   // Profile State
   const [profile, setProfile] = useState({
@@ -22,9 +24,6 @@ function Settings() {
   const [isEditingProfile, setIsEditingProfile] = useState(false)
   const [tempName, setTempName] = useState(profile.name)
   const [tempAge, setTempAge] = useState(profile.age)
-
-  // Language State
-  const [selectedLanguage, setSelectedLanguage] = useState('English')
 
   // Accessibility State
   const [accessibility, setAccessibility] = useState({
@@ -81,20 +80,20 @@ function Settings() {
           type="button"
           className="back-btn"
           onClick={() => navigate('/patient')}
-          aria-label="Back to dashboard"
+          aria-label={t('backToDashboard')}
         >
-          ← Back to Dashboard
+          {t('backToDashboard')}
         </button>
 
         <div className="settings-header-card">
-          <h1 className="dash-greeting">Settings</h1>
-          <p className="dash-subtext">Manage your preferences</p>
+          <h1 className="dash-greeting">{t('settings')}</h1>
+          <p className="dash-subtext">{t('managePreferences')}</p>
         </div>
 
         {/* Section 1: Patient Profile */}
         <section aria-labelledby="profile-heading" className="settings-section-card">
           <h2 id="profile-heading" className="settings-section-title">
-            👤 Patient Profile
+            👤 {t('patientProfile')}
           </h2>
 
           <div className="settings-profile-display">
@@ -103,7 +102,9 @@ function Settings() {
             </div>
             <div className="settings-profile-info">
               <h3 className="settings-profile-name">{profile.name}</h3>
-              <p className="settings-profile-meta">Age: {profile.age} years</p>
+              <p className="settings-profile-meta">
+                {t('age')}: {profile.age} {t('yearsOld')}
+              </p>
             </div>
             <button
               type="button"
@@ -114,7 +115,7 @@ function Settings() {
                 setIsEditingProfile(true)
               }}
             >
-              ✏️ Edit Profile
+              {t('editProfile')}
             </button>
           </div>
         </section>
@@ -122,39 +123,39 @@ function Settings() {
         {/* Section 2: Language */}
         <section aria-labelledby="language-heading" className="settings-section-card">
           <h2 id="language-heading" className="settings-section-title">
-            🌐 Language
+            🌐 {t('language')}
           </h2>
           <p className="settings-section-subtext">
-            Choose your preferred language for activities and instructions.
+            {t('languageDesc')}
           </p>
           <LanguageSelector
             languages={LANGUAGES}
-            selectedLanguage={selectedLanguage}
-            onSelectLanguage={setSelectedLanguage}
+            selectedLanguage={language}
+            onSelectLanguage={setLanguage}
           />
         </section>
 
         {/* Section 3: Accessibility */}
         <section aria-labelledby="accessibility-heading" className="settings-section-card">
           <h2 id="accessibility-heading" className="settings-section-title">
-            👁️ Accessibility
+            👁️ {t('accessibility')}
           </h2>
           <div className="settings-toggle-group">
             <ToggleSwitch
-              label="Voice Assistance"
-              description="Speak screen instructions out loud"
+              label={t('voiceAssistance')}
+              description={t('voiceAssistanceDesc')}
               isOn={accessibility.voiceAssistance}
               onToggle={() => handleToggleAccessibility('voiceAssistance')}
             />
             <ToggleSwitch
-              label="Large Text"
-              description="Enlarge typography across patient screens"
+              label={t('largeText')}
+              description={t('largeTextDesc')}
               isOn={accessibility.largeText}
               onToggle={() => handleToggleAccessibility('largeText')}
             />
             <ToggleSwitch
-              label="High Contrast"
-              description="Enhance color contrast for better visibility"
+              label={t('highContrast')}
+              description={t('highContrastDesc')}
               isOn={accessibility.highContrast}
               onToggle={() => handleToggleAccessibility('highContrast')}
             />
@@ -164,24 +165,24 @@ function Settings() {
         {/* Section 4: Notifications */}
         <section aria-labelledby="notifications-heading" className="settings-section-card">
           <h2 id="notifications-heading" className="settings-section-title">
-            🔔 Notifications
+            🔔 {t('notifications')}
           </h2>
           <div className="settings-toggle-group">
             <ToggleSwitch
-              label="Medicine Reminders"
-              description="Receive alerts for daily medicine schedules"
+              label={t('medicineReminders')}
+              description={t('medicineRemindersDesc')}
               isOn={notifications.medicine}
               onToggle={() => handleToggleNotification('medicine')}
             />
             <ToggleSwitch
-              label="Activity Reminders"
-              description="Receive alerts for daily walks and exercises"
+              label={t('activityReminders')}
+              description={t('activityRemindersDesc')}
               isOn={notifications.activity}
               onToggle={() => handleToggleNotification('activity')}
             />
             <ToggleSwitch
-              label="Appointment Reminders"
-              description="Receive alerts for upcoming doctor visits"
+              label={t('appointmentReminders')}
+              description={t('appointmentRemindersDesc')}
               isOn={notifications.appointment}
               onToggle={() => handleToggleNotification('appointment')}
             />
@@ -191,14 +192,14 @@ function Settings() {
         {/* Section 5: Privacy */}
         <section aria-labelledby="privacy-heading" className="settings-section-card">
           <h2 id="privacy-heading" className="settings-section-title">
-            🔒 Privacy & Data
+            🔒 {t('privacy')}
           </h2>
           <div className="privacy-info-box">
             <span className="privacy-icon" aria-hidden="true">
               🛡️
             </span>
             <p className="privacy-text">
-              Your activity data is used to support your care and caregiver monitoring.
+              {t('privacyDesc')}
             </p>
           </div>
         </section>
@@ -210,7 +211,7 @@ function Settings() {
             className="btn btn-danger btn-full settings-logout-btn"
             onClick={handleLogOut}
           >
-            🚪 Log Out
+            🚪 {t('logout')}
           </button>
         </div>
 
@@ -226,13 +227,13 @@ function Settings() {
             <div className="modal-content" onClick={(e) => e.stopPropagation()}>
               <div className="modal-header">
                 <h2 id="edit-profile-title" className="modal-title">
-                  Edit Patient Profile
+                  {t('editPatientProfile')}
                 </h2>
                 <button
                   type="button"
                   className="modal-close-btn"
                   onClick={() => setIsEditingProfile(false)}
-                  aria-label="Close dialog"
+                  aria-label={t('close')}
                 >
                   ✕
                 </button>
@@ -241,7 +242,7 @@ function Settings() {
               <form onSubmit={handleSaveProfile} className="modal-form">
                 <div className="form-group">
                   <label htmlFor="edit-name" className="form-label">
-                    Full Name *
+                    {t('fullName')} *
                   </label>
                   <input
                     id="edit-name"
@@ -255,7 +256,7 @@ function Settings() {
 
                 <div className="form-group">
                   <label htmlFor="edit-age" className="form-label">
-                    Age *
+                    {t('age')} *
                   </label>
                   <input
                     id="edit-age"
@@ -271,14 +272,14 @@ function Settings() {
 
                 <div className="modal-actions">
                   <button type="submit" className="btn btn-primary btn-full">
-                    Save Profile
+                    {t('saveProfile')}
                   </button>
                   <button
                     type="button"
                     className="btn btn-secondary btn-full"
                     onClick={() => setIsEditingProfile(false)}
                   >
-                    Cancel
+                    {t('cancel')}
                   </button>
                 </div>
               </form>
@@ -291,3 +292,4 @@ function Settings() {
 }
 
 export default Settings
+

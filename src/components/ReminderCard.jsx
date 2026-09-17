@@ -1,3 +1,5 @@
+import { useLanguage } from '../context/LanguageContext.jsx'
+
 function ReminderCard({
   icon,
   title,
@@ -7,6 +9,7 @@ function ReminderCard({
   onToggleDone,
   onDelete,
 }) {
+  const { t } = useLanguage()
   const isCompleted = status === 'Completed'
 
   return (
@@ -31,7 +34,7 @@ function ReminderCard({
             <span className="reminder-status-icon" aria-hidden="true">
               {isCompleted ? '✔' : '○'}
             </span>
-            {status}
+            {isCompleted ? t('completed') : t('pending')}
           </span>
 
           {onToggleDone && (
@@ -47,7 +50,7 @@ function ReminderCard({
                   : `Mark ${title} as completed`
               }
             >
-              {isCompleted ? '✓ Done (Undo)' : 'Mark as Done'}
+              {isCompleted ? `✓ ${t('completed')}` : t('markAsDone')}
             </button>
           )}
 
@@ -57,7 +60,7 @@ function ReminderCard({
               className="reminder-delete-btn"
               onClick={onDelete}
               aria-label={`Delete ${title} reminder`}
-              title="Delete Reminder"
+              title={t('delete')}
             >
               🗑️
             </button>
@@ -69,3 +72,4 @@ function ReminderCard({
 }
 
 export default ReminderCard
+

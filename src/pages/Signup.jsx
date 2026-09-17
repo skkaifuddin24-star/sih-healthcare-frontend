@@ -1,12 +1,15 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Logo from '../components/Logo.jsx'
 import TextInput from '../components/TextInput.jsx'
 import PasswordInput from '../components/PasswordInput.jsx'
 import Button from '../components/Button.jsx'
 import RoleCard from '../components/RoleCard.jsx'
+import { useLanguage } from '../context/LanguageContext.jsx'
 
 function Signup() {
+  const navigate = useNavigate()
+  const { t } = useLanguage()
   const [formData, setFormData] = useState({
     fullName: '',
     identifier: '',
@@ -16,7 +19,6 @@ function Signup() {
     role: '',
   })
   const [errors, setErrors] = useState({})
-  const [submitted, setSubmitted] = useState(false)
 
   const handleChange = (field) => (e) => {
     setFormData((prev) => ({ ...prev, [field]: e.target.value }))
@@ -32,33 +34,31 @@ function Signup() {
     const newErrors = {}
 
     if (!formData.fullName.trim()) {
-      newErrors.fullName = 'Please enter your full name.'
+      newErrors.fullName = t('fullName')
     }
 
     if (!formData.identifier.trim()) {
-      newErrors.identifier = 'Please enter your email or phone number.'
+      newErrors.identifier = t('emailOrPhone')
     }
 
     if (!formData.password) {
-      newErrors.password = 'Please create a password.'
+      newErrors.password = t('password')
     } else if (formData.password.length < 6) {
-      newErrors.password = 'Password must be at least 6 characters.'
+      newErrors.password = t('password')
     }
 
     if (!formData.confirmPassword) {
-      newErrors.confirmPassword = 'Please confirm your password.'
+      newErrors.confirmPassword = t('confirmPassword')
     } else if (formData.confirmPassword !== formData.password) {
-      newErrors.confirmPassword = 'Passwords do not match.'
+      newErrors.confirmPassword = t('confirmPassword')
     }
 
     if (!formData.age) {
-      newErrors.age = 'Please enter your age.'
-    } else if (Number(formData.age) < 1 || Number(formData.age) > 120) {
-      newErrors.age = 'Please enter a valid age.'
+      newErrors.age = t('age')
     }
 
     if (!formData.role) {
-      newErrors.role = 'Please select whether you are a patient or caregiver.'
+      newErrors.role = t('signingUpAs')
     }
 
     setErrors(newErrors)
@@ -68,38 +68,8 @@ function Signup() {
   const handleSubmit = (e) => {
     e.preventDefault()
     if (validate()) {
-      setSubmitted(true)
+      navigate('/role-selection', { replace: true })
     }
-  }
-
-  if (submitted) {
-    return (
-      <div className="auth-page">
-        <div className="auth-card">
-          <div className="success-state">
-            <div className="success-icon" aria-hidden="true">
-              <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
-                <circle cx="28" cy="28" r="28" fill="#16A34A" />
-                <path
-                  d="M17 29l7 7 15-15"
-                  stroke="#FFFFFF"
-                  strokeWidth="3.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </div>
-            <h2 className="auth-heading success-heading">Account Created</h2>
-            <p className="success-message">
-              Welcome, {formData.fullName || 'there'}. Your account has been created successfully.
-            </p>
-            <Link to="/login" className="btn btn-primary btn-full success-login-btn">
-              Go to Login
-            </Link>
-          </div>
-        </div>
-      </div>
-    )
   }
 
   return (
@@ -107,29 +77,29 @@ function Signup() {
       <div className="auth-card">
         <div className="auth-header">
           <Logo />
-          <h1 className="app-name">Smriti</h1>
-          <p className="app-tagline">Create an account to get started.</p>
+          <h1 className="app-name">{t('appName')}</h1>
+          <p className="app-tagline">{t('tagline')}</p>
         </div>
 
-        <h2 className="auth-heading">Sign Up</h2>
+        <h2 className="auth-heading">{t('signup')}</h2>
 
         <form onSubmit={handleSubmit} noValidate>
           <TextInput
             id="fullName"
-            label="Full Name"
+            label={t('fullName')}
             value={formData.fullName}
             onChange={handleChange('fullName')}
-            placeholder="Enter your full name"
+            placeholder={t('fullName')}
             error={errors.fullName}
             autoComplete="name"
           />
 
           <TextInput
             id="identifier"
-            label="Email or Phone Number"
+            label={t('emailOrPhone')}
             value={formData.identifier}
             onChange={handleChange('identifier')}
-            placeholder="Enter your email or phone number"
+            placeholder={t('emailOrPhone')}
             error={errors.identifier}
             autoComplete="username"
             inputMode="email"
@@ -137,48 +107,48 @@ function Signup() {
 
           <PasswordInput
             id="password"
-            label="Password"
+            label={t('password')}
             value={formData.password}
             onChange={handleChange('password')}
-            placeholder="Create a password"
+            placeholder={t('password')}
             error={errors.password}
             autoComplete="new-password"
           />
 
           <PasswordInput
             id="confirmPassword"
-            label="Confirm Password"
+            label={t('confirmPassword')}
             value={formData.confirmPassword}
             onChange={handleChange('confirmPassword')}
-            placeholder="Re-enter your password"
+            placeholder={t('confirmPassword')}
             error={errors.confirmPassword}
             autoComplete="new-password"
           />
 
           <TextInput
             id="age"
-            label="Age"
+            label={t('age')}
             type="number"
             value={formData.age}
             onChange={handleChange('age')}
-            placeholder="Enter your age"
+            placeholder={t('age')}
             error={errors.age}
             inputMode="numeric"
           />
 
           <div className="form-field">
-            <p className="form-label">I am signing up as</p>
+            <p className="form-label">{t('signingUpAs')}</p>
             <div className="role-card-group">
               <RoleCard
-                label="Patient"
-                description="I want cognitive support for myself."
+                label={t('patient')}
+                description={t('patientDesc')}
                 icon="🧑"
                 selected={formData.role === 'patient'}
                 onSelect={() => handleRoleSelect('patient')}
               />
               <RoleCard
-                label="Caregiver"
-                description="I support and care for a patient."
+                label={t('caregiver')}
+                description={t('caregiverDesc')}
                 icon="🤝"
                 selected={formData.role === 'caregiver'}
                 onSelect={() => handleRoleSelect('caregiver')}
@@ -187,13 +157,13 @@ function Signup() {
             {errors.role && <p className="form-error">{errors.role}</p>}
           </div>
 
-          <Button type="submit">Create Account</Button>
+          <Button type="submit">{t('createAccount')}</Button>
         </form>
 
         <p className="auth-footer-text">
-          Already have an account?{' '}
+          {t('alreadyHaveAccount')}{' '}
           <Link to="/login" className="link-text link-text-bold">
-            Login
+            {t('login')}
           </Link>
         </p>
       </div>
@@ -202,3 +172,5 @@ function Signup() {
 }
 
 export default Signup
+
+

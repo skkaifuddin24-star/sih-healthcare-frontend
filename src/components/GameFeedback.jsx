@@ -1,3 +1,5 @@
+import { useLanguage } from '../context/LanguageContext.jsx'
+
 function GameFeedback({
   isCorrect,
   correctAnswerText,
@@ -5,6 +7,8 @@ function GameFeedback({
   onNext,
   isLastQuestion,
 }) {
+  const { t } = useLanguage()
+
   return (
     <div
       className={`game-feedback-card ${
@@ -24,11 +28,11 @@ function GameFeedback({
         </div>
         <div className="feedback-text-container">
           <h3 className="feedback-title">
-            {isCorrect ? '✓ Correct! Well done.' : '✕ Not quite right.'}
+            {isCorrect ? `✓ ${t('correct')}` : `✕ ${t('incorrect')}`}
           </h3>
           {!isCorrect && correctAnswerText && (
             <p className="feedback-correct-answer">
-              The correct answer is: <strong>{correctAnswerText}</strong>
+              <strong>{correctAnswerText}</strong>
             </p>
           )}
           {explanation && <p className="feedback-explanation">{explanation}</p>}
@@ -39,10 +43,11 @@ function GameFeedback({
         className="btn btn-primary btn-full feedback-next-btn"
         onClick={onNext}
       >
-        {isLastQuestion ? 'See Final Results →' : 'Next Question →'}
+        {isLastQuestion ? `${t('score')} →` : `${t('nextQuestion')} →`}
       </button>
     </div>
   )
 }
 
 export default GameFeedback
+

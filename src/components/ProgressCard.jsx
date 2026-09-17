@@ -1,25 +1,29 @@
+import { useLanguage } from '../context/LanguageContext.jsx'
+
 function ProgressCard({ gamesCompleted, gamesTotal, performance, streak }) {
+  const { t } = useLanguage()
+
   return (
     <section className="progress-card" aria-labelledby="progress-card-heading">
       <h2 id="progress-card-heading" className="section-heading">
-        Today's Progress
+        {t('dailyCognitiveProgress')}
       </h2>
-      <p className="progress-note">Based on today's activity and engagement.</p>
+      <p className="progress-note">{t('cognitiveProgressDesc')}</p>
 
       <div className="progress-stats">
         <div className="progress-stat">
           <span className="progress-stat-value">
             {gamesCompleted}/{gamesTotal}
           </span>
-          <span className="progress-stat-label">Games Completed</span>
+          <span className="progress-stat-label">{t('gamesCompleted')}</span>
         </div>
         <div className="progress-stat">
           <span className="progress-stat-value">{performance}%</span>
-          <span className="progress-stat-label">Activity Performance</span>
+          <span className="progress-stat-label">{t('performanceScore')}</span>
         </div>
         <div className="progress-stat">
-          <span className="progress-stat-value">{streak} days</span>
-          <span className="progress-stat-label">Daily Streak</span>
+          <span className="progress-stat-value">{streak} {t('days')}</span>
+          <span className="progress-stat-label">{t('dailyStreak')}</span>
         </div>
       </div>
 
@@ -31,3 +35,4 @@ function ProgressCard({ gamesCompleted, gamesTotal, performance, streak }) {
 }
 
 export default ProgressCard
+

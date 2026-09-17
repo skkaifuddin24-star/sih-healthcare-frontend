@@ -1,4 +1,7 @@
+import { useLanguage } from '../context/LanguageContext.jsx'
+
 function TaskStatusCard({ icon, name, time, status }) {
+  const { t } = useLanguage()
   const isCompleted = status === 'Completed'
 
   return (
@@ -18,10 +21,11 @@ function TaskStatusCard({ icon, name, time, status }) {
         <span className="task-badge-icon" aria-hidden="true">
           {isCompleted ? '✓' : '○'}
         </span>
-        {status}
+        {isCompleted ? t('completed') : t('pending')}
       </span>
     </div>
   )
 }
 
 export default TaskStatusCard
+

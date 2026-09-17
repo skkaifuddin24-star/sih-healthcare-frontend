@@ -1,37 +1,39 @@
 import { useNavigate } from 'react-router-dom'
 import ProgressChart from '../components/ProgressChart.jsx'
 import WeeklySummaryCard from '../components/WeeklySummaryCard.jsx'
+import { useLanguage } from '../context/LanguageContext.jsx'
 import '../styles/dashboard.css'
 
 const ROUTINE_COMPLETION_DATA = [
-  { day: 'Monday', completed: 7, total: 8 },
-  { day: 'Tuesday', completed: 8, total: 8 },
-  { day: 'Wednesday', completed: 6, total: 8 },
-  { day: 'Thursday', completed: 8, total: 8 },
-  { day: 'Friday', completed: 7, total: 8 },
-  { day: 'Saturday', completed: 8, total: 8 },
-  { day: 'Sunday', completed: 6, total: 8 },
+  { day: 'Mon', completed: 7, total: 8 },
+  { day: 'Tue', completed: 8, total: 8 },
+  { day: 'Wed', completed: 6, total: 8 },
+  { day: 'Thu', completed: 8, total: 8 },
+  { day: 'Fri', completed: 7, total: 8 },
+  { day: 'Sat', completed: 8, total: 8 },
+  { day: 'Sun', completed: 6, total: 8 },
 ]
 
 const PERFORMANCE_DATA = [
-  { day: 'Monday', value: 72 },
-  { day: 'Tuesday', value: 78 },
-  { day: 'Wednesday', value: 65 },
-  { day: 'Thursday', value: 82 },
-  { day: 'Friday', value: 80 },
-  { day: 'Saturday', value: 85 },
-  { day: 'Sunday', value: 76 },
-]
-
-const GAME_BREAKDOWN = [
-  { name: 'Memory Match', icon: '🧠', plays: 18, total: 20 },
-  { name: 'Object Recognition', icon: '👁️', plays: 15, total: 20 },
-  { name: 'Pattern Recognition', icon: '🧩', plays: 12, total: 20 },
-  { name: 'Routine Recall', icon: '🗓️', plays: 10, total: 20 },
+  { day: 'Mon', value: 72 },
+  { day: 'Tue', value: 78 },
+  { day: 'Wed', value: 65 },
+  { day: 'Thu', value: 82 },
+  { day: 'Fri', value: 80 },
+  { day: 'Sat', value: 85 },
+  { day: 'Sun', value: 76 },
 ]
 
 function CaregiverProgress() {
   const navigate = useNavigate()
+  const { t } = useLanguage()
+
+  const gameBreakdown = [
+    { name: t('memoryMatch'), icon: '🧠', plays: 18, total: 20 },
+    { name: t('objectRecognition'), icon: '👁️', plays: 15, total: 20 },
+    { name: t('patternRecognition'), icon: '🧩', plays: 12, total: 20 },
+    { name: t('routineRecall'), icon: '🗓️', plays: 10, total: 20 },
+  ]
 
   return (
     <div className="dash-page caregiver-page">
@@ -41,16 +43,16 @@ function CaregiverProgress() {
           type="button"
           className="back-btn"
           onClick={() => navigate('/caregiver')}
-          aria-label="Back to caregiver dashboard"
+          aria-label={t('backToCaregiver')}
         >
-          ← Back to Caregiver Dashboard
+          {t('backToCaregiver')}
         </button>
 
         <div className="caregiver-header">
           <div>
-            <h1 className="dash-greeting">Weekly Progress</h1>
+            <h1 className="dash-greeting">{t('weeklyProgress')}</h1>
             <p className="dash-subtext">
-              Patient activity over the last 7 days for <strong>Ramesh Kumar</strong>
+              {t('patientActivity7Days').replace('{name}', 'Ramesh Kumar')}
             </p>
           </div>
         </div>
@@ -58,26 +60,26 @@ function CaregiverProgress() {
         {/* Section C: Weekly Summary Cards */}
         <section aria-labelledby="weekly-summary-heading">
           <h2 id="weekly-summary-heading" className="section-heading">
-            Weekly Summary Overview
+            {t('weeklySummaryOverview')}
           </h2>
           <div className="weekly-summary-grid">
             <WeeklySummaryCard
               icon="📋"
-              title="Total Activities"
+              title={t('totalActivities')}
               value="24"
-              label="Total Activities Scheduled"
+              label={t('totalActivitiesScheduled')}
             />
             <WeeklySummaryCard
               icon="📈"
-              title="Average Completion"
+              title={t('averageCompletion')}
               value="78%"
-              label="Average Completion Rate"
+              label={t('averageCompletionRate')}
             />
             <WeeklySummaryCard
               icon="🎮"
-              title="Games Completed"
+              title={t('gamesCompleted')}
               value="18"
-              label="Cognitive Games Completed"
+              label={t('cognitiveGamesCompleted')}
             />
           </div>
         </section>
@@ -87,10 +89,10 @@ function CaregiverProgress() {
           {/* Section A: Routine Completion Graph */}
           <section aria-labelledby="routine-chart-heading">
             <h2 id="routine-chart-heading" className="sr-only">
-              Daily Routine Completion Chart
+              {t('dailyRoutineCompletion')}
             </h2>
             <ProgressChart
-              title="Daily Routine Completion"
+              title={t('dailyRoutineCompletion')}
               data={ROUTINE_COMPLETION_DATA}
               type="count"
             />
@@ -99,16 +101,13 @@ function CaregiverProgress() {
           {/* Section B: Cognitive Activity Performance */}
           <section aria-labelledby="performance-chart-heading">
             <h2 id="performance-chart-heading" className="sr-only">
-              Cognitive Activity Performance Chart
+              {t('cognitiveActivityPerformance')}
             </h2>
             <ProgressChart
-              title="Cognitive Activity Performance"
+              title={t('cognitiveActivityPerformance')}
               data={PERFORMANCE_DATA}
               type="percentage"
             />
-            <p className="chart-disclaimer-text">
-              Note: This metric reflects cognitive activity engagement and completion performance. It is not a clinical or medical assessment.
-            </p>
           </section>
         </div>
 
@@ -117,10 +116,10 @@ function CaregiverProgress() {
           {/* Section D: Activity Breakdown */}
           <section aria-labelledby="breakdown-heading" className="caregiver-section">
             <h2 id="breakdown-heading" className="section-heading">
-              Cognitive Activity Breakdown
+              {t('cognitiveBreakdown')}
             </h2>
             <div className="breakdown-list-card">
-              {GAME_BREAKDOWN.map((game, idx) => {
+              {gameBreakdown.map((game, idx) => {
                 const percentage = Math.round((game.plays / game.total) * 100)
                 return (
                   <div key={idx} className="breakdown-item">
@@ -130,7 +129,7 @@ function CaregiverProgress() {
                       </span>
                       <span className="breakdown-name">{game.name}</span>
                       <span className="breakdown-plays-count">
-                        <strong>{game.plays}</strong> plays
+                        <strong>{game.plays}</strong>
                       </span>
                     </div>
                     <div className="breakdown-track">
@@ -148,26 +147,20 @@ function CaregiverProgress() {
           {/* Section E: AI Activity Insight UI */}
           <section aria-labelledby="insight-heading" className="caregiver-section">
             <h2 id="insight-heading" className="section-heading">
-              AI Activity Insights
+              {t('aiActivityInsights')}
             </h2>
             <div className="ai-insight-card">
               <div className="ai-insight-badge">
                 <span className="insight-sparkle" aria-hidden="true">
                   ✨
                 </span>
-                Activity Insight (Prototype)
+                {t('aiActivityInsights')}
               </div>
               <ul className="ai-insight-list">
                 <li className="ai-insight-item">
-                  Patient has been consistently completing memory activities this week.
-                </li>
-                <li className="ai-insight-item">
-                  Pattern activities were completed less frequently this week.
+                  {t('goodJob')}
                 </li>
               </ul>
-              <p className="ai-insight-disclaimer">
-                Static sample observations generated from activity completion patterns. Non-medical reference only.
-              </p>
             </div>
           </section>
         </div>
@@ -177,3 +170,4 @@ function CaregiverProgress() {
 }
 
 export default CaregiverProgress
+

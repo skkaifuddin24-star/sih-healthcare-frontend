@@ -1,11 +1,15 @@
+import { useLanguage } from '../context/LanguageContext.jsx'
+
 function AlertCard({ alerts = [] }) {
+  const { t } = useLanguage()
+
   if (!alerts || alerts.length === 0) {
     return (
       <div className="alert-card alert-card-empty">
         <span className="alert-icon" aria-hidden="true">
           ✓
         </span>
-        <p className="alert-text">No pending alerts. Patient routine is on track today.</p>
+        <p className="alert-text">{t('alertsAndAttention')}</p>
       </div>
     )
   }
@@ -16,7 +20,7 @@ function AlertCard({ alerts = [] }) {
         <span className="alert-heading-icon" aria-hidden="true">
           ⚠️
         </span>
-        Needs Attention
+        {t('alertsAndAttention')}
       </h3>
       <div className="alert-list">
         {alerts.map((alert, idx) => (
@@ -28,11 +32,9 @@ function AlertCard({ alerts = [] }) {
           </div>
         ))}
       </div>
-      <p className="alert-disclaimer">
-        Informational routine updates. No medical diagnosis provided.
-      </p>
     </div>
   )
 }
 
 export default AlertCard
+

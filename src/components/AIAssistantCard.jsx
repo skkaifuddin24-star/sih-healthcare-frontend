@@ -1,13 +1,15 @@
 import { useState } from 'react'
-
-const SUGGESTED_QUESTIONS = [
-  'What do I need to do today?',
-  'When is my next medicine?',
-  'What games should I play?',
-]
+import { useLanguage } from '../context/LanguageContext.jsx'
 
 function AIAssistantCard() {
+  const { t } = useLanguage()
   const [message, setMessage] = useState('')
+
+  const suggestedQuestions = [
+    t('suggestedQuestion1'),
+    t('suggestedQuestion2'),
+    t('suggestedQuestion3'),
+  ]
 
   const handleSend = (e) => {
     e.preventDefault()
@@ -18,13 +20,13 @@ function AIAssistantCard() {
   return (
     <section className="ai-card" aria-labelledby="ai-card-heading">
       <h2 id="ai-card-heading" className="ai-card-title">
-        AI Memory Companion
+        {t('aiCompanionTitle')}
       </h2>
       <p className="ai-card-description">
-        Ask me about your day, reminders or things you want to remember.
+        {t('aiCompanionDesc')}
       </p>
 
-      <button type="button" className="ai-mic-btn" aria-label="Speak to your memory companion">
+      <button type="button" className="ai-mic-btn" aria-label={t('tapToSpeak')}>
         <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
           <rect x="12" y="4" width="8" height="15" rx="4" fill="#FFFFFF" />
           <path
@@ -35,31 +37,31 @@ function AIAssistantCard() {
           />
           <path d="M16 24v4" stroke="#FFFFFF" strokeWidth="2.2" strokeLinecap="round" />
         </svg>
-        <span>Tap to Speak</span>
+        <span>{t('tapToSpeak')}</span>
       </button>
 
       <form className="ai-input-row" onSubmit={handleSend}>
         <label htmlFor="ai-message" className="sr-only">
-          Type a message to your memory companion
+          {t('aiCompanionTitle')}
         </label>
         <input
           id="ai-message"
           type="text"
           className="form-input ai-text-input"
-          placeholder="Type your question here..."
+          placeholder={t('typeQuestion')}
           value={message}
           onChange={(e) => setMessage(e.target.value)}
         />
         <button type="submit" className="btn btn-primary ai-send-btn">
-          Send
+          {t('send')}
         </button>
       </form>
 
       <div className="ai-suggestions">
-        {SUGGESTED_QUESTIONS.map((question) => (
+        {suggestedQuestions.map((question, idx) => (
           <button
             type="button"
-            key={question}
+            key={idx}
             className="ai-suggestion-chip"
             onClick={() => setMessage(question)}
           >
@@ -72,3 +74,4 @@ function AIAssistantCard() {
 }
 
 export default AIAssistantCard
+

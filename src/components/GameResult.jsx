@@ -1,3 +1,5 @@
+import { useLanguage } from '../context/LanguageContext.jsx'
+
 function GameResult({
   moves,
   time,
@@ -8,19 +10,21 @@ function GameResult({
   onPlayAgain,
   onBack,
 }) {
+  const { t } = useLanguage()
+
   // If score is provided (for Pattern Recognition, Object Recognition, Routine Recall)
   if (score !== undefined && totalQuestions !== undefined) {
     const percentage = Math.round((score / totalQuestions) * 100)
-    let encouragement = 'Great job exercising your mind today!'
+    let encouragement = t('greatJob')
     if (percentage === 100) {
-      encouragement = 'Perfect score! Outstanding performance!'
+      encouragement = t('perfectScore')
     } else if (percentage >= 60) {
-      encouragement = 'Well done! Keep practicing every day.'
+      encouragement = t('wellDoneKeepPracticing')
     }
 
     return (
       <div className="game-result-card">
-        <h2 className="game-result-title">Well Done! 🎉</h2>
+        <h2 className="game-result-title">{t('wellDone')}</h2>
         <p className="game-result-subtitle">{encouragement}</p>
 
         <div className="game-result-stats">
@@ -28,15 +32,15 @@ function GameResult({
             <span className="game-result-value">
               {score} / {totalQuestions}
             </span>
-            <span className="game-result-label">Score</span>
+            <span className="game-result-label">{t('score')}</span>
           </div>
           <div className="game-result-stat">
             <span className="game-result-value">{percentage}%</span>
-            <span className="game-result-label">Accuracy</span>
+            <span className="game-result-label">{t('accuracy')}</span>
           </div>
           <div className="game-result-stat">
             <span className="game-result-value">{totalQuestions}</span>
-            <span className="game-result-label">Questions</span>
+            <span className="game-result-label">{t('questions')}</span>
           </div>
         </div>
 
@@ -46,14 +50,14 @@ function GameResult({
             className="btn btn-primary btn-full"
             onClick={onPlayAgain}
           >
-            Play Again
+            {t('playAgain')}
           </button>
           <button
             type="button"
             className="btn btn-secondary btn-full"
             onClick={onBack}
           >
-            Back to Activities
+            {t('backToActivities')}
           </button>
         </div>
       </div>
@@ -63,23 +67,23 @@ function GameResult({
   // Memory Match default view
   return (
     <div className="game-result-card">
-      <h2 className="game-result-title">Well Done! 🎉</h2>
-      <p className="game-result-subtitle">You matched all the pairs.</p>
+      <h2 className="game-result-title">{t('wellDone')}</h2>
+      <p className="game-result-subtitle">{t('matchedAllPairs')}</p>
 
       <div className="game-result-stats">
         <div className="game-result-stat">
           <span className="game-result-value">{moves}</span>
-          <span className="game-result-label">Total Moves</span>
+          <span className="game-result-label">{t('totalMoves')}</span>
         </div>
         <div className="game-result-stat">
           <span className="game-result-value">{time}</span>
-          <span className="game-result-label">Time Taken</span>
+          <span className="game-result-label">{t('timeTaken')}</span>
         </div>
         <div className="game-result-stat">
           <span className="game-result-value">
             {matches}/{totalPairs}
           </span>
-          <span className="game-result-label">Matches</span>
+          <span className="game-result-label">{t('matches')}</span>
         </div>
       </div>
 
@@ -89,14 +93,14 @@ function GameResult({
           className="btn btn-primary btn-full"
           onClick={onPlayAgain}
         >
-          Play Again
+          {t('playAgain')}
         </button>
         <button
           type="button"
           className="btn btn-secondary btn-full"
           onClick={onBack}
         >
-          Back to Activities
+          {t('backToActivities')}
         </button>
       </div>
     </div>
@@ -104,4 +108,5 @@ function GameResult({
 }
 
 export default GameResult
+
 

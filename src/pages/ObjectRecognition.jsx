@@ -4,6 +4,7 @@ import GameHeader from '../components/GameHeader.jsx'
 import ProgressIndicator from '../components/ProgressIndicator.jsx'
 import GameFeedback from '../components/GameFeedback.jsx'
 import GameResult from '../components/GameResult.jsx'
+import { useLanguage } from '../context/LanguageContext.jsx'
 import '../styles/dashboard.css'
 import '../styles/games.css'
 
@@ -52,6 +53,7 @@ const OBJECT_ROUNDS = [
 
 function ObjectRecognition() {
   const navigate = useNavigate()
+  const { t } = useLanguage()
   const [currentRoundIndex, setCurrentRoundIndex] = useState(0)
   const [score, setScore] = useState(0)
   const [selectedOption, setSelectedOption] = useState(null)
@@ -93,8 +95,8 @@ function ObjectRecognition() {
     <div className="dash-page">
       <div className="dash-container quiz-game-container">
         <GameHeader
-          title="Object Recognition"
-          instruction="Look at the picture and identify the object."
+          title={t('objectRecognition')}
+          instruction={t('objectInstruction')}
           onBack={() => navigate('/games')}
         />
 
@@ -120,7 +122,7 @@ function ObjectRecognition() {
               >
                 {currentRound.symbol}
               </div>
-              <h2 className="object-question-title">{currentRound.question}</h2>
+              <h2 className="object-question-title">{t('objectInstruction')}</h2>
             </div>
 
             <div className="answer-section">
@@ -185,3 +187,4 @@ function ObjectRecognition() {
 }
 
 export default ObjectRecognition
+

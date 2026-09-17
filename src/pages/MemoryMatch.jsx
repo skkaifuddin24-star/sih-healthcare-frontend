@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { useMemoryGame } from '../hooks/useMemoryGame.js'
 import MemoryCard from '../components/MemoryCard.jsx'
 import GameResult from '../components/GameResult.jsx'
+import { useLanguage } from '../context/LanguageContext.jsx'
 import '../styles/dashboard.css'
 import '../styles/games.css'
 
@@ -15,6 +16,7 @@ function formatTime(totalSeconds) {
 
 function MemoryMatch() {
   const navigate = useNavigate()
+  const { t } = useLanguage()
   const {
     cards,
     moves,
@@ -34,30 +36,30 @@ function MemoryMatch() {
           type="button"
           className="back-btn"
           onClick={() => navigate('/games')}
-          aria-label="Back to activities"
+          aria-label={t('backToActivities')}
         >
-          ← Back
+          {t('backToActivities')}
         </button>
 
         <div className="games-page-header">
-          <h1 className="dash-greeting">Memory Match</h1>
-          <p className="dash-subtext">Find all matching pairs</p>
+          <h1 className="dash-greeting">{t('memoryMatch')}</h1>
+          <p className="dash-subtext">{t('memoryInstruction')}</p>
         </div>
 
         <div className="memory-stats" role="status" aria-live="polite">
           <div className="memory-stat">
             <span className="memory-stat-value">{moves}</span>
-            <span className="memory-stat-label">Moves</span>
+            <span className="memory-stat-label">{t('totalMoves')}</span>
           </div>
           <div className="memory-stat">
             <span className="memory-stat-value">
               {matches}/{totalPairs}
             </span>
-            <span className="memory-stat-label">Matches</span>
+            <span className="memory-stat-label">{t('matches')}</span>
           </div>
           <div className="memory-stat">
             <span className="memory-stat-value">{formatTime(seconds)}</span>
-            <span className="memory-stat-label">Timer</span>
+            <span className="memory-stat-label">{t('timeTaken')}</span>
           </div>
         </div>
 
@@ -91,3 +93,4 @@ function MemoryMatch() {
 }
 
 export default MemoryMatch
+

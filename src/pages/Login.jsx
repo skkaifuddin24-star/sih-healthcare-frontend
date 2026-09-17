@@ -5,9 +5,12 @@ import Logo from '../components/Logo.jsx'
 import TextInput from '../components/TextInput.jsx'
 import PasswordInput from '../components/PasswordInput.jsx'
 import Button from '../components/Button.jsx'
+import { useLanguage } from '../context/LanguageContext.jsx'
 
 function Login() {
   const navigate = useNavigate()
+  const { t } = useLanguage()
+
   const [formData, setFormData] = useState({
     identifier: '',
     password: '',
@@ -24,11 +27,11 @@ function Login() {
     const newErrors = {}
 
     if (!formData.identifier.trim()) {
-      newErrors.identifier = 'Please enter your email or phone number.'
+      newErrors.identifier = t('emailOrPhone')
     }
 
     if (!formData.password) {
-      newErrors.password = 'Please enter your password.'
+      newErrors.password = t('password')
     }
 
     setErrors(newErrors)
@@ -47,19 +50,19 @@ function Login() {
       <div className="auth-card">
         <div className="auth-header">
           <Logo />
-          <h1 className="app-name">Smriti</h1>
-          <p className="app-tagline">Your cognitive companion is here to help you.</p>
+          <h1 className="app-name">{t('appName')}</h1>
+          <p className="app-tagline">{t('tagline')}</p>
         </div>
 
-        <h2 className="auth-heading">Welcome Back</h2>
+        <h2 className="auth-heading">{t('welcomeBack')}</h2>
 
         <form onSubmit={handleSubmit} noValidate>
           <TextInput
             id="identifier"
-            label="Email or Phone Number"
+            label={t('emailOrPhone')}
             value={formData.identifier}
             onChange={handleChange('identifier')}
-            placeholder="Enter your email or phone number"
+            placeholder={t('emailOrPhone')}
             error={errors.identifier}
             autoComplete="username"
             inputMode="email"
@@ -67,10 +70,10 @@ function Login() {
 
           <PasswordInput
             id="password"
-            label="Password"
+            label={t('password')}
             value={formData.password}
             onChange={handleChange('password')}
-            placeholder="Enter your password"
+            placeholder={t('password')}
             error={errors.password}
             autoComplete="current-password"
           />
@@ -83,21 +86,21 @@ function Login() {
                 checked={rememberMe}
                 onChange={(e) => setRememberMe(e.target.checked)}
               />
-              <span>Remember me</span>
+              <span>{t('rememberMe')}</span>
             </label>
 
             <button type="button" className="link-text link-button">
-              Forgot Password?
+              {t('forgotPassword')}
             </button>
           </div>
 
-          <Button type="submit">Login</Button>
+          <Button type="submit">{t('login')}</Button>
         </form>
 
         <p className="auth-footer-text">
-          Don't have an account?{' '}
+          {t('dontHaveAccount')}{' '}
           <Link to="/signup" className="link-text link-text-bold">
-            Sign Up
+            {t('signup')}
           </Link>
         </p>
       </div>
@@ -106,3 +109,4 @@ function Login() {
 }
 
 export default Login
+

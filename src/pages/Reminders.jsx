@@ -2,50 +2,53 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import ReminderCard from '../components/ReminderCard.jsx'
 import AddReminderModal from '../components/AddReminderModal.jsx'
+import { useLanguage } from '../context/LanguageContext.jsx'
 import '../styles/dashboard.css'
-
-const INITIAL_REMINDERS = [
-  {
-    id: 1,
-    icon: '💊',
-    title: 'Morning Medicine',
-    time: '10:00 AM',
-    type: 'Medicine',
-    description: 'Take blood pressure tablet with water after breakfast.',
-    status: 'Pending',
-  },
-  {
-    id: 2,
-    icon: '💧',
-    title: 'Drink Water',
-    time: '11:30 AM',
-    type: 'Hydration',
-    description: 'Drink a full glass of fresh water to stay hydrated.',
-    status: 'Completed',
-  },
-  {
-    id: 3,
-    icon: '🏃',
-    title: '15 Minute Walk',
-    time: '05:00 PM',
-    type: 'Daily Activity',
-    description: 'Take a gentle stroll in the garden or balcony.',
-    status: 'Pending',
-  },
-  {
-    id: 4,
-    icon: '🏥',
-    title: 'Doctor Appointment',
-    time: '06:30 PM',
-    type: 'Appointment',
-    description: 'Routine checkup with Dr. Sharma.',
-    status: 'Pending',
-  },
-]
 
 function Reminders() {
   const navigate = useNavigate()
-  const [reminders, setReminders] = useState(INITIAL_REMINDERS)
+  const { t } = useLanguage()
+
+  const initialReminders = [
+    {
+      id: 1,
+      icon: '💊',
+      title: t('morningMedicine'),
+      time: '10:00 AM',
+      type: 'Medicine',
+      description: t('morningMedicineDesc'),
+      status: 'Pending',
+    },
+    {
+      id: 2,
+      icon: '💧',
+      title: t('drinkWater'),
+      time: '11:30 AM',
+      type: 'Hydration',
+      description: t('drinkWaterDesc'),
+      status: 'Completed',
+    },
+    {
+      id: 3,
+      icon: '🏃',
+      title: t('walk'),
+      time: '05:00 PM',
+      type: 'Daily Activity',
+      description: t('walkDesc'),
+      status: 'Pending',
+    },
+    {
+      id: 4,
+      icon: '🏥',
+      title: t('doctorAppointment'),
+      time: '06:30 PM',
+      type: 'Appointment',
+      description: t('doctorAppointmentDesc'),
+      status: 'Pending',
+    },
+  ]
+
+  const [reminders, setReminders] = useState(initialReminders)
   const [isAddModalOpen, setIsAddModalOpen] = useState(false)
 
   const handleToggleDone = (id) => {
@@ -78,29 +81,29 @@ function Reminders() {
           type="button"
           className="back-btn"
           onClick={() => navigate('/patient')}
-          aria-label="Back to dashboard"
+          aria-label={t('backToDashboard')}
         >
-          ← Back to Dashboard
+          {t('backToDashboard')}
         </button>
 
         <div className="reminders-header-section">
           <div>
-            <h1 className="dash-greeting">Today's Reminders</h1>
-            <p className="dash-subtext">Here is what you need to do today.</p>
+            <h1 className="dash-greeting">{t('todaysReminders')}</h1>
+            <p className="dash-subtext">{t('remindersSubtext')}</p>
           </div>
           <button
             type="button"
             className="btn btn-primary add-reminder-trigger-btn"
             onClick={() => setIsAddModalOpen(true)}
           >
-            + Add Reminder
+            {t('addReminder')}
           </button>
         </div>
 
         {totalCount > 0 && (
           <div className="reminders-summary-bar">
             <span className="summary-text">
-              Completed <strong>{completedCount}</strong> of <strong>{totalCount}</strong> tasks today
+              {t('completedTasks').replace('{completed}', completedCount).replace('{total}', totalCount)}
             </span>
             <div className="summary-progress-bg">
               <div
@@ -117,8 +120,8 @@ function Reminders() {
               <span className="empty-icon" aria-hidden="true">
                 📋
               </span>
-              <h3>No reminders for today</h3>
-              <p>Click "Add Reminder" above to create a new reminder.</p>
+              <h3>{t('noReminders')}</h3>
+              <p>{t('clickAddReminder')}</p>
             </div>
           ) : (
             <div className="reminder-card-list">
@@ -149,3 +152,4 @@ function Reminders() {
 }
 
 export default Reminders
+

@@ -1,4 +1,8 @@
+import { useLanguage } from '../context/LanguageContext.jsx'
+
 function GameCard({ icon, name, description, difficulty, onPlay }) {
+  const { t } = useLanguage()
+
   const handleKeyDown = (e) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault()
@@ -28,10 +32,11 @@ function GameCard({ icon, name, description, difficulty, onPlay }) {
           onPlay()
         }}
       >
-        Play
+        {t('start')}
       </button>
     </div>
   )
 }
 
 export default GameCard
+

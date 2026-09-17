@@ -1,15 +1,19 @@
+import { useLanguage } from '../context/LanguageContext.jsx'
+
 function EmergencyCard({ onCallCaregiver, onEmergencyHelp }) {
+  const { t } = useLanguage()
+
   return (
     <section className="emergency-card" aria-labelledby="emergency-card-heading">
       <h2 id="emergency-card-heading" className="section-heading">
-        Need Help?
+        {t('needHelp')}
       </h2>
       <div className="emergency-actions">
         <button type="button" className="btn btn-secondary btn-full" onClick={onCallCaregiver}>
-          Call Caregiver
+          {t('callCaregiver')}
         </button>
         <button type="button" className="btn btn-danger btn-full" onClick={onEmergencyHelp}>
-          Emergency Help
+          {t('emergencyHelp')}
         </button>
       </div>
     </section>
@@ -17,3 +21,4 @@ function EmergencyCard({ onCallCaregiver, onEmergencyHelp }) {
 }
 
 export default EmergencyCard
+

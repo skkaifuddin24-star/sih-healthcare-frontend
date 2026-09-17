@@ -1,15 +1,19 @@
+import { useLanguage } from '../context/LanguageContext.jsx'
+
 function DashboardHeader({ patientName, onProfileClick }) {
+  const { t } = useLanguage()
+
   return (
     <header className="dash-header">
       <div>
-        <h1 className="dash-greeting">Good Morning, {patientName} 👋</h1>
-        <p className="dash-subtext">Let's have a good day.</p>
+        <h1 className="dash-greeting">{t('goodMorning')} {patientName} 👋</h1>
+        <p className="dash-subtext">{t('goodDay')}</p>
       </div>
       <button
         type="button"
         className="dash-profile-btn"
         onClick={onProfileClick}
-        aria-label="Profile and settings"
+        aria-label={t('settings')}
       >
         <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
           <circle cx="14" cy="14" r="13" stroke="#2563EB" strokeWidth="2" />
@@ -27,3 +31,4 @@ function DashboardHeader({ patientName, onProfileClick }) {
 }
 
 export default DashboardHeader
+

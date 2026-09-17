@@ -1,3 +1,5 @@
+import { useLanguage } from '../context/LanguageContext.jsx'
+
 function ConfirmationModal({
   isOpen,
   title,
@@ -9,6 +11,8 @@ function ConfirmationModal({
   isSimulating = false,
   simulatedMessage = '',
 }) {
+  const { t } = useLanguage()
+
   if (!isOpen) return null
 
   return (
@@ -31,7 +35,7 @@ function ConfirmationModal({
             type="button"
             className="modal-close-btn"
             onClick={onCancel}
-            aria-label="Close dialog"
+            aria-label={t('close')}
           >
             ✕
           </button>
@@ -44,12 +48,11 @@ function ConfirmationModal({
             </div>
             <h3 className="simulated-status-heading">
               {confirmVariant === 'danger'
-                ? 'Emergency Services Alerted'
-                : 'Calling Caregiver...'}
+                ? t('emergencyAssistanceTitle')
+                : t('callCaregiver')}
             </h3>
             <p className="simulated-status-text">
-              {simulatedMessage ||
-                'This is a frontend prototype demonstrating emergency assistance functionality.'}
+              {simulatedMessage}
             </p>
             <div className="simulated-badge">Simulated Action</div>
             <button
@@ -57,7 +60,7 @@ function ConfirmationModal({
               className="btn btn-secondary btn-full"
               onClick={onCancel}
             >
-              Close Window
+              {t('close')}
             </button>
           </div>
         ) : (
@@ -79,7 +82,7 @@ function ConfirmationModal({
                 className="btn btn-secondary btn-full"
                 onClick={onCancel}
               >
-                Cancel
+                {t('cancel')}
               </button>
             </div>
           </div>
@@ -90,3 +93,4 @@ function ConfirmationModal({
 }
 
 export default ConfirmationModal
+

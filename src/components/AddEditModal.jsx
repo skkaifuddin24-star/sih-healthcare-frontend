@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useLanguage } from '../context/LanguageContext.jsx'
 
 const REMINDER_TYPES = ['Medicine', 'Hydration', 'Appointment', 'Meal', 'Rest', 'General']
 const FREQUENCIES = ['Daily', 'Twice Daily', 'Weekly', 'As Needed']
@@ -12,6 +13,7 @@ function AddEditModal({
   onClose,
   onSave,
 }) {
+  const { t } = useLanguage()
   const [title, setTitle] = useState('')
   const [time, setTime] = useState('')
   const [type, setType] = useState('Medicine')
@@ -45,11 +47,11 @@ function AddEditModal({
     e.preventDefault()
 
     if (!title.trim()) {
-      setError('Please enter a name.')
+      setError(t('reminderTitle'))
       return
     }
     if (!time.trim()) {
-      setError('Please enter a time.')
+      setError(t('time'))
       return
     }
 
@@ -66,8 +68,8 @@ function AddEditModal({
     onClose()
   }
 
-  const modalTitle = `${mode === 'edit' ? 'Edit' : 'Add'} ${
-    targetType === 'reminder' ? 'Reminder' : 'Daily Activity'
+  const modalTitle = `${mode === 'edit' ? t('edit') : t('addReminder')} ${
+    targetType === 'reminder' ? t('reminderType') : t('dailyActivity')
   }`
 
   return (
@@ -87,7 +89,7 @@ function AddEditModal({
             type="button"
             className="modal-close-btn"
             onClick={onClose}
-            aria-label="Close dialog"
+            aria-label={t('close')}
           >
             ✕
           </button>
@@ -116,17 +118,12 @@ function AddEditModal({
 
           <div className="form-group">
             <label htmlFor="item-title" className="form-label">
-              {targetType === 'reminder' ? 'Reminder Name *' : 'Activity Name *'}
+              {targetType === 'reminder' ? `${t('reminderTitle')} *` : `${t('dailyActivity')} *`}
             </label>
             <input
               id="item-title"
               type="text"
               className="form-input"
-              placeholder={
-                targetType === 'reminder'
-                  ? 'e.g. Morning Medicine'
-                  : 'e.g. 15 Minute Walk'
-              }
               value={title}
               onChange={(e) => {
                 setTitle(e.target.value)
@@ -137,13 +134,12 @@ function AddEditModal({
 
           <div className="form-group">
             <label htmlFor="item-time" className="form-label">
-              Time *
+              {t('time')} *
             </label>
             <input
               id="item-time"
               type="text"
               className="form-input"
-              placeholder="e.g. 10:00 AM"
               value={time}
               onChange={(e) => {
                 setTime(e.target.value)
@@ -156,7 +152,7 @@ function AddEditModal({
             <>
               <div className="form-group">
                 <label htmlFor="item-type" className="form-label">
-                  Reminder Type
+                  {t('reminderType')}
                 </label>
                 <select
                   id="item-type"
@@ -164,9 +160,9 @@ function AddEditModal({
                   value={type}
                   onChange={(e) => setType(e.target.value)}
                 >
-                  {REMINDER_TYPES.map((t) => (
-                    <option key={t} value={t}>
-                      {t}
+                  {REMINDER_TYPES.map((tItem) => (
+                    <option key={tItem} value={tItem}>
+                      {tItem}
                     </option>
                   ))}
                 </select>
@@ -174,7 +170,7 @@ function AddEditModal({
 
               <div className="form-group">
                 <label htmlFor="item-freq" className="form-label">
-                  Frequency
+                  {t('frequency')}
                 </label>
                 <select
                   id="item-freq"
@@ -193,13 +189,12 @@ function AddEditModal({
           ) : (
             <div className="form-group">
               <label htmlFor="item-desc" className="form-label">
-                Description (Optional)
+                {t('description')}
               </label>
               <input
                 id="item-desc"
                 type="text"
                 className="form-input"
-                placeholder="e.g. Gentle walk in garden or balcony"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               />
@@ -208,14 +203,14 @@ function AddEditModal({
 
           <div className="modal-actions">
             <button type="submit" className="btn btn-primary btn-full">
-              {mode === 'edit' ? 'Update' : 'Save'} {targetType === 'reminder' ? 'Reminder' : 'Activity'}
+              {t('save')}
             </button>
             <button
               type="button"
               className="btn btn-secondary btn-full"
               onClick={onClose}
             >
-              Cancel
+              {t('cancel')}
             </button>
           </div>
         </form>
@@ -225,3 +220,4 @@ function AddEditModal({
 }
 
 export default AddEditModal
+

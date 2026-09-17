@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import SummaryCard from '../components/SummaryCard.jsx'
 import TaskStatusCard from '../components/TaskStatusCard.jsx'
 import AlertCard from '../components/AlertCard.jsx'
+import { useLanguage } from '../context/LanguageContext.jsx'
 import '../styles/dashboard.css'
 
 const PATIENT_DATA = {
@@ -11,79 +12,80 @@ const PATIENT_DATA = {
   avatarIcon: '👴',
 }
 
-const OVERVIEW_METRICS = [
-  {
-    icon: '🧠',
-    title: 'Cognitive Activities',
-    value: '3 / 4 completed',
-    subtext: '75% Daily Goal',
-  },
-  {
-    icon: '💊',
-    title: 'Medicine',
-    value: '2 / 3 taken',
-    subtext: '1 Pending Dose',
-  },
-  {
-    icon: '💧',
-    title: 'Hydration',
-    value: '5 / 6 completed',
-    subtext: 'On track',
-  },
-  {
-    icon: '🏃',
-    title: 'Daily Activities',
-    value: '3 / 4 completed',
-    subtext: '1 Walk Pending',
-  },
-]
-
-const TODAY_TASKS = [
-  {
-    icon: '💊',
-    name: 'Morning Medicine',
-    time: '10:00 AM',
-    status: 'Completed',
-  },
-  {
-    icon: '💧',
-    name: 'Drink Water',
-    time: '11:30 AM',
-    status: 'Completed',
-  },
-  {
-    icon: '🧠',
-    name: 'Memory Game',
-    time: '02:00 PM',
-    status: 'Completed',
-  },
-  {
-    icon: '🏃',
-    name: '15 Minute Walk',
-    time: '05:00 PM',
-    status: 'Pending',
-  },
-  {
-    icon: '💊',
-    name: 'Evening Medicine',
-    time: '08:00 PM',
-    status: 'Pending',
-  },
-]
-
-const ALERTS = [
-  'Evening medicine is still pending.',
-  'Patient has not completed today’s walk.',
-]
-
-const RECENT_COGNITIVE_ACTIVITIES = [
-  { name: 'Memory Match', icon: '🧠', score: '8/10', date: 'Today' },
-  { name: 'Pattern Recognition', icon: '🧩', score: '6/10', date: 'Today' },
-  { name: 'Object Recognition', icon: '👁️', score: '9/10', date: 'Yesterday' },
-]
-
 function Caregiver() {
   const navigate = useNavigate()
+  const { t } = useLanguage()
+
+  const overviewMetrics = [
+    {
+      icon: '🧠',
+      title: t('cognitiveActivities'),
+      value: '3 / 4',
+      subtext: t('completed'),
+    },
+    {
+      icon: '💊',
+      title: t('medicine'),
+      value: '2 / 3',
+      subtext: t('completed'),
+    },
+    {
+      icon: '💧',
+      title: t('hydration'),
+      value: '5 / 6',
+      subtext: t('completed'),
+    },
+    {
+      icon: '🏃',
+      title: t('dailyActivity'),
+      value: '3 / 4',
+      subtext: t('completed'),
+    },
+  ]
+
+  const todayTasks = [
+    {
+      icon: '💊',
+      name: t('morningMedicine'),
+      time: '10:00 AM',
+      status: 'Completed',
+    },
+    {
+      icon: '💧',
+      name: t('drinkWater'),
+      time: '11:30 AM',
+      status: 'Completed',
+    },
+    {
+      icon: '🧠',
+      name: t('memoryMatch'),
+      time: '02:00 PM',
+      status: 'Completed',
+    },
+    {
+      icon: '🏃',
+      name: t('walk'),
+      time: '05:00 PM',
+      status: 'Pending',
+    },
+    {
+      icon: '💊',
+      name: t('eveningMedicine'),
+      time: '08:00 PM',
+      status: 'Pending',
+    },
+  ]
+
+  const alerts = [
+    t('eveningMedicine') + ' - ' + t('pending'),
+    t('walk') + ' - ' + t('pending'),
+  ]
+
+  const recentCognitiveActivities = [
+    { name: t('memoryMatch'), icon: '🧠', score: '8/10', date: 'Today' },
+    { name: t('patternRecognition'), icon: '🧩', score: '6/10', date: 'Today' },
+    { name: t('objectRecognition'), icon: '👁️', score: '9/10', date: 'Yesterday' },
+  ]
 
   return (
     <div className="dash-page caregiver-page">
@@ -91,9 +93,9 @@ function Caregiver() {
         {/* Header Section */}
         <header className="caregiver-header">
           <div className="caregiver-header-text">
-            <h1 className="dash-greeting">Good Morning, Caregiver 👋</h1>
+            <h1 className="dash-greeting">{t('goodMorningCaregiver')}</h1>
             <p className="dash-subtext">
-              Here’s how <strong>{PATIENT_DATA.name}</strong> is doing today.
+              {t('patientDoingToday')}
             </p>
           </div>
 
@@ -102,17 +104,17 @@ function Caregiver() {
               {PATIENT_DATA.avatarIcon}
             </div>
             <div className="patient-info">
-              <span className="patient-label">Active Patient</span>
+              <span className="patient-label">{t('activePatient')}</span>
               <h2 className="patient-name">{PATIENT_DATA.name}</h2>
-              <span className="patient-meta">Age: {PATIENT_DATA.age} years</span>
+              <span className="patient-meta">{t('age')}: {PATIENT_DATA.age} {t('yearsOld')}</span>
             </div>
             <button
               type="button"
               className="switch-role-btn"
               onClick={() => navigate('/role-selection')}
-              title="Switch Role"
+              title={t('switchRole')}
             >
-              Switch Role
+              {t('switchRole')}
             </button>
           </div>
         </header>
@@ -124,24 +126,24 @@ function Caregiver() {
             className="btn btn-primary"
             onClick={() => navigate('/caregiver/progress')}
           >
-            📊 View Weekly Progress
+            {t('viewWeeklyProgress')}
           </button>
           <button
             type="button"
             className="btn btn-secondary"
             onClick={() => navigate('/caregiver/manage')}
           >
-            ⚙️ Manage Patient
+            {t('managePatient')}
           </button>
         </div>
 
         {/* Section A: Today's Overview */}
         <section aria-labelledby="overview-heading">
           <h2 id="overview-heading" className="section-heading">
-            Today's Overview
+            {t('todaysOverview')}
           </h2>
           <div className="summary-cards-grid">
-            {OVERVIEW_METRICS.map((metric, idx) => (
+            {overviewMetrics.map((metric, idx) => (
               <SummaryCard
                 key={idx}
                 icon={metric.icon}
@@ -158,10 +160,10 @@ function Caregiver() {
           {/* Section B: Today's Tasks */}
           <section aria-labelledby="tasks-heading" className="caregiver-section">
             <h2 id="tasks-heading" className="section-heading">
-              Today's Tasks
+              {t('todaysTasks')}
             </h2>
             <div className="task-status-list">
-              {TODAY_TASKS.map((task, idx) => (
+              {todayTasks.map((task, idx) => (
                 <TaskStatusCard
                   key={idx}
                   icon={task.icon}
@@ -175,17 +177,17 @@ function Caregiver() {
 
           {/* Section C: Alerts / Attention */}
           <section aria-labelledby="alerts-heading" className="caregiver-section">
-            <AlertCard alerts={ALERTS} />
+            <AlertCard alerts={alerts} />
 
             {/* Section D: Recent Cognitive Activity */}
             <div className="recent-activity-card">
               <div className="recent-activity-header">
                 <h3 className="recent-activity-title">
-                  🧠 Recent Cognitive Activity
+                  {t('recentCognitiveActivity')}
                 </h3>
               </div>
               <div className="recent-activity-list">
-                {RECENT_COGNITIVE_ACTIVITIES.map((act, idx) => (
+                {recentCognitiveActivities.map((act, idx) => (
                   <div key={idx} className="recent-activity-item">
                     <span className="recent-icon" aria-hidden="true">
                       {act.icon}
@@ -194,7 +196,7 @@ function Caregiver() {
                       <span className="recent-name">{act.name}</span>
                       <span className="recent-date">{act.date}</span>
                     </div>
-                    <span className="recent-score-badge">Score: {act.score}</span>
+                    <span className="recent-score-badge">{t('score')}: {act.score}</span>
                   </div>
                 ))}
               </div>
@@ -203,7 +205,7 @@ function Caregiver() {
                 className="btn btn-secondary btn-full view-progress-link-btn"
                 onClick={() => navigate('/caregiver/progress')}
               >
-                View Full Weekly Progress →
+                {t('viewFullWeeklyProgress')}
               </button>
             </div>
           </section>
@@ -214,3 +216,4 @@ function Caregiver() {
 }
 
 export default Caregiver
+

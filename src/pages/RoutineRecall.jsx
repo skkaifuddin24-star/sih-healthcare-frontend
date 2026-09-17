@@ -4,6 +4,7 @@ import GameHeader from '../components/GameHeader.jsx'
 import ProgressIndicator from '../components/ProgressIndicator.jsx'
 import GameFeedback from '../components/GameFeedback.jsx'
 import GameResult from '../components/GameResult.jsx'
+import { useLanguage } from '../context/LanguageContext.jsx'
 import '../styles/dashboard.css'
 import '../styles/games.css'
 
@@ -74,6 +75,7 @@ const ROUTINE_ROUNDS = [
 
 function RoutineRecall() {
   const navigate = useNavigate()
+  const { t } = useLanguage()
   const [currentRoundIndex, setCurrentRoundIndex] = useState(0)
   const [score, setScore] = useState(0)
   const [selectedOption, setSelectedOption] = useState(null)
@@ -115,8 +117,8 @@ function RoutineRecall() {
     <div className="dash-page">
       <div className="dash-container quiz-game-container">
         <GameHeader
-          title="Routine Recall"
-          instruction="Put the activities in the correct order."
+          title={t('routineRecall')}
+          instruction={t('routineInstruction')}
           onBack={() => navigate('/games')}
         />
 
@@ -135,7 +137,7 @@ function RoutineRecall() {
             />
 
             <div className="routine-activities-section">
-              <span className="question-prompt-label">Daily Activities:</span>
+              <span className="question-prompt-label">{t('todaysActivities')}:</span>
               <div className="routine-cards-grid">
                 {currentRound.activities.map((act) => (
                   <div key={act.id} className="routine-activity-card">
@@ -153,7 +155,7 @@ function RoutineRecall() {
             </div>
 
             <div className="answer-section">
-              <h3 className="answer-section-title">Select the correct activity:</h3>
+              <h3 className="answer-section-title">{t('routineInstruction')}</h3>
               <div className="answer-grid answer-grid-text">
                 {currentRound.options.map((option, idx) => {
                   const isSelected = selectedOption === option
@@ -225,3 +227,4 @@ function RoutineRecall() {
 }
 
 export default RoutineRecall
+

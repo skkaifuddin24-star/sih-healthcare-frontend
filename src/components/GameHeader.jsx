@@ -1,7 +1,9 @@
 import { useNavigate } from 'react-router-dom'
+import { useLanguage } from '../context/LanguageContext.jsx'
 
 function GameHeader({ title, instruction, onBack }) {
   const navigate = useNavigate()
+  const { t } = useLanguage()
 
   const handleBack = () => {
     if (onBack) {
@@ -17,9 +19,9 @@ function GameHeader({ title, instruction, onBack }) {
         type="button"
         className="back-btn"
         onClick={handleBack}
-        aria-label="Back to activities"
+        aria-label={t('backToActivities')}
       >
-        ← Back to Activities
+        {t('backToActivities')}
       </button>
       <h1 className="dash-greeting">{title}</h1>
       {instruction && <p className="dash-subtext">{instruction}</p>}
@@ -28,3 +30,4 @@ function GameHeader({ title, instruction, onBack }) {
 }
 
 export default GameHeader
+

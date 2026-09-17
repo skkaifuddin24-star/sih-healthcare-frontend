@@ -1,16 +1,19 @@
 import { useState } from 'react'
-
-const REMINDER_TYPES = [
-  { label: '💊 Medicine', icon: '💊', value: 'Medicine' },
-  { label: '💧 Hydration', icon: '💧', value: 'Hydration' },
-  { label: '🏃 Daily Activity', icon: '🏃', value: 'Daily Activity' },
-  { label: '🏥 Appointment', icon: '🏥', value: 'Appointment' },
-  { label: '🥣 Meal', icon: '🥣', value: 'Meal' },
-  { label: '💤 Rest', icon: '💤', value: 'Rest' },
-]
+import { useLanguage } from '../context/LanguageContext.jsx'
 
 function AddReminderModal({ isOpen, onClose, onAddReminder }) {
-  const [selectedType, setSelectedType] = useState(REMINDER_TYPES[0])
+  const { t } = useLanguage()
+
+  const reminderTypes = [
+    { label: `💊 ${t('medicine')}`, icon: '💊', value: 'Medicine' },
+    { label: `💧 ${t('hydration')}`, icon: '💧', value: 'Hydration' },
+    { label: `🏃 ${t('dailyActivity')}`, icon: '🏃', value: 'Daily Activity' },
+    { label: `🏥 ${t('appointment')}`, icon: '🏥', value: 'Appointment' },
+    { label: `🥣 ${t('meal')}`, icon: '🥣', value: 'Meal' },
+    { label: `💤 ${t('rest')}`, icon: '💤', value: 'Rest' },
+  ]
+
+  const [selectedType, setSelectedType] = useState(reminderTypes[0])
   const [title, setTitle] = useState('')
   const [time, setTime] = useState('')
   const [description, setDescription] = useState('')
@@ -22,12 +25,12 @@ function AddReminderModal({ isOpen, onClose, onAddReminder }) {
     e.preventDefault()
 
     if (!title.trim()) {
-      setError('Please enter a title for the reminder.')
+      setError(t('reminderTitle'))
       return
     }
 
     if (!time.trim()) {
-      setError('Please enter a time for the reminder.')
+      setError(t('time'))
       return
     }
 
@@ -63,13 +66,13 @@ function AddReminderModal({ isOpen, onClose, onAddReminder }) {
       >
         <div className="modal-header">
           <h2 id="add-reminder-title" className="modal-title">
-            Add New Reminder
+            {t('addReminder')}
           </h2>
           <button
             type="button"
             className="modal-close-btn"
             onClick={onClose}
-            aria-label="Close dialog"
+            aria-label={t('close')}
           >
             ✕
           </button>
@@ -80,20 +83,20 @@ function AddReminderModal({ isOpen, onClose, onAddReminder }) {
         <form onSubmit={handleSubmit} className="modal-form">
           <div className="form-group">
             <label htmlFor="reminder-type" className="form-label">
-              Reminder Type
+              {t('reminderType')}
             </label>
             <select
               id="reminder-type"
               className="form-select"
               value={selectedType.value}
               onChange={(e) => {
-                const found = REMINDER_TYPES.find(
+                const found = reminderTypes.find(
                   (t) => t.value === e.target.value
                 )
                 if (found) setSelectedType(found)
               }}
             >
-              {REMINDER_TYPES.map((t) => (
+              {reminderTypes.map((t) => (
                 <option key={t.value} value={t.value}>
                   {t.label}
                 </option>
@@ -103,13 +106,13 @@ function AddReminderModal({ isOpen, onClose, onAddReminder }) {
 
           <div className="form-group">
             <label htmlFor="reminder-title" className="form-label">
-              Reminder Title *
+              {t('reminderTitle')}
             </label>
             <input
               id="reminder-title"
               type="text"
               className="form-input"
-              placeholder="e.g. Evening Medicine"
+              placeholder={t('reminderTitle')}
               value={title}
               onChange={(e) => {
                 setTitle(e.target.value)
@@ -120,13 +123,13 @@ function AddReminderModal({ isOpen, onClose, onAddReminder }) {
 
           <div className="form-group">
             <label htmlFor="reminder-time" className="form-label">
-              Time *
+              {t('time')}
             </label>
             <input
               id="reminder-time"
               type="text"
               className="form-input"
-              placeholder="e.g. 08:00 PM"
+              placeholder={t('time')}
               value={time}
               onChange={(e) => {
                 setTime(e.target.value)
@@ -137,13 +140,13 @@ function AddReminderModal({ isOpen, onClose, onAddReminder }) {
 
           <div className="form-group">
             <label htmlFor="reminder-desc" className="form-label">
-              Short Description / Note (Optional)
+              {t('shortDesc')}
             </label>
             <input
               id="reminder-desc"
               type="text"
               className="form-input"
-              placeholder="e.g. Take 1 pill with warm water after dinner"
+              placeholder={t('shortDesc')}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
@@ -151,14 +154,14 @@ function AddReminderModal({ isOpen, onClose, onAddReminder }) {
 
           <div className="modal-actions">
             <button type="submit" className="btn btn-primary btn-full">
-              Add Reminder
+              {t('addReminder')}
             </button>
             <button
               type="button"
               className="btn btn-secondary btn-full"
               onClick={onClose}
             >
-              Cancel
+              {t('cancel')}
             </button>
           </div>
         </form>
@@ -168,3 +171,4 @@ function AddReminderModal({ isOpen, onClose, onAddReminder }) {
 }
 
 export default AddReminderModal
+

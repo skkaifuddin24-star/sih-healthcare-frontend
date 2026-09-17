@@ -5,69 +5,63 @@ import ReminderManagementCard from '../components/ReminderManagementCard.jsx'
 import ActivityManagementCard from '../components/ActivityManagementCard.jsx'
 import AddEditModal from '../components/AddEditModal.jsx'
 import PreferenceControl from '../components/PreferenceControl.jsx'
+import { useLanguage } from '../context/LanguageContext.jsx'
 import '../styles/dashboard.css'
-
-const INITIAL_REMINDERS = [
-  {
-    id: 1,
-    icon: '💊',
-    title: 'Morning Medicine',
-    time: '10:00 AM',
-    frequency: 'Daily',
-    type: 'Medicine',
-  },
-  {
-    id: 2,
-    icon: '💊',
-    title: 'Evening Medicine',
-    time: '07:00 PM',
-    frequency: 'Daily',
-    type: 'Medicine',
-  },
-  {
-    id: 3,
-    icon: '💧',
-    title: 'Drink Water',
-    time: '11:30 AM',
-    frequency: 'Daily',
-    type: 'Hydration',
-  },
-]
-
-const INITIAL_ACTIVITIES = [
-  {
-    id: 101,
-    icon: '🚶',
-    title: '15 Minute Walk',
-    time: '05:00 PM',
-    description: 'Gentle walk in garden or balcony',
-  },
-  {
-    id: 102,
-    icon: '🧠',
-    title: 'Memory Practice',
-    time: '06:00 PM',
-    description: 'Cognitive activity session',
-  },
-  {
-    id: 103,
-    icon: '🧘',
-    title: 'Relaxation Activity',
-    time: '08:00 PM',
-    description: 'Evening calm and rest',
-  },
-]
 
 function CaregiverManage() {
   const navigate = useNavigate()
+  const { language, setLanguage, t } = useLanguage()
+
+  const initialReminders = [
+    {
+      id: 1,
+      icon: '💊',
+      title: t('morningMedicine'),
+      time: '10:00 AM',
+      frequency: t('daily'),
+      type: t('medicine'),
+    },
+    {
+      id: 2,
+      icon: '💊',
+      title: t('eveningMedicine'),
+      time: '07:00 PM',
+      frequency: t('daily'),
+      type: t('medicine'),
+    },
+    {
+      id: 3,
+      icon: '💧',
+      title: t('drinkWater'),
+      time: '11:30 AM',
+      frequency: t('daily'),
+      type: t('hydration'),
+    },
+  ]
+
+  const initialActivities = [
+    {
+      id: 101,
+      icon: '🚶',
+      title: t('walk'),
+      time: '05:00 PM',
+      description: t('walkDesc'),
+    },
+    {
+      id: 102,
+      icon: '🧠',
+      title: t('memoryMatch'),
+      time: '06:00 PM',
+      description: t('memoryMatchDesc'),
+    },
+  ]
 
   // State lists
-  const [reminders, setReminders] = useState(INITIAL_REMINDERS)
-  const [activities, setActivities] = useState(INITIAL_ACTIVITIES)
+  const [reminders, setReminders] = useState(initialReminders)
+  const [activities, setActivities] = useState(initialActivities)
 
   // Preferences State
   const [preferences, setPreferences] = useState({
-    language: 'English',
     voiceAssistance: 'ON',
     largeText: 'ON',
   })
@@ -166,17 +160,17 @@ function CaregiverManage() {
           type="button"
           className="back-btn"
           onClick={() => navigate('/caregiver')}
-          aria-label="Back to caregiver dashboard"
+          aria-label={t('backToCaregiver')}
         >
-          ← Back to Caregiver Dashboard
+          {t('backToCaregiver')}
         </button>
 
         {/* Header Section */}
         <div className="caregiver-header">
           <div>
-            <h1 className="dash-greeting">Manage Patient</h1>
+            <h1 className="dash-greeting">{t('managePatientTitle')}</h1>
             <p className="dash-subtext">
-              Manage <strong>Ramesh Kumar</strong>'s daily routine and activities.
+              {t('managePatientSubtext')}
             </p>
           </div>
 
@@ -185,9 +179,9 @@ function CaregiverManage() {
               👴
             </span>
             <div className="patient-info">
-              <span className="patient-label">Active Patient</span>
+              <span className="patient-label">{t('activePatient')}</span>
               <h2 className="patient-name">Ramesh Kumar</h2>
-              <span className="patient-meta">Age: 72 years</span>
+              <span className="patient-meta">{t('age')}: 72 {t('yearsOld')}</span>
             </div>
           </div>
         </div>
@@ -198,13 +192,13 @@ function CaregiverManage() {
             <span className="toast-icon" aria-hidden="true">
               ✓
             </span>
-            <span>Changes saved successfully.</span>
+            <span>{t('changesSaved')}</span>
           </div>
         )}
 
         {/* Section 1: Reminders */}
         <ManageSection
-          title="Reminders"
+          title={t('todaysReminders')}
           icon="💊"
           actionButton={
             <button
@@ -212,12 +206,12 @@ function CaregiverManage() {
               className="btn btn-primary btn-sm-action"
               onClick={handleOpenAddReminder}
             >
-              + Add Reminder
+              {t('addReminder')}
             </button>
           }
         >
           {reminders.length === 0 ? (
-            <div className="empty-manage-state">No reminders added yet.</div>
+            <div className="empty-manage-state">{t('noRemindersAdded')}</div>
           ) : (
             <div className="management-cards-list">
               {reminders.map((reminder) => (
@@ -238,7 +232,7 @@ function CaregiverManage() {
 
         {/* Section 2: Daily Activities */}
         <ManageSection
-          title="Daily Activities"
+          title={t('todaysActivities')}
           icon="🏃"
           actionButton={
             <button
@@ -246,12 +240,12 @@ function CaregiverManage() {
               className="btn btn-primary btn-sm-action"
               onClick={handleOpenAddActivity}
             >
-              + Add Activity
+              {t('addActivity')}
             </button>
           }
         >
           {activities.length === 0 ? (
-            <div className="empty-manage-state">No daily activities added yet.</div>
+            <div className="empty-manage-state">{t('noActivitiesAdded')}</div>
           ) : (
             <div className="management-cards-list">
               {activities.map((activity) => (
@@ -270,27 +264,24 @@ function CaregiverManage() {
         </ManageSection>
 
         {/* Section 3: Patient Preferences */}
-        <ManageSection title="Patient Preferences" icon="⚙️">
+        <ManageSection title={t('patientPreferences')} icon="⚙️">
           <div className="preferences-group">
             <PreferenceControl
-              label="Language"
-              description="Preferred interface display language for the patient"
-              value={preferences.language}
+              label={t('language')}
+              description={t('languageDesc')}
+              value={language}
               options={[
-                { label: 'English', value: 'English' },
-                { label: 'Hindi', value: 'Hindi' },
-                { label: 'Tamil', value: 'Tamil' },
-                { label: 'Telugu', value: 'Telugu' },
-                { label: 'Bengali', value: 'Bengali' },
+                { label: 'English', value: 'en' },
+                { label: 'Hindi (हिंदी)', value: 'hi' },
+                { label: 'Bengali (বাংলা)', value: 'bn' },
+                { label: 'Assamese (অসমীয়া)', value: 'as' },
               ]}
-              onChange={(val) =>
-                setPreferences((prev) => ({ ...prev, language: val }))
-              }
+              onChange={(val) => setLanguage(val)}
             />
 
             <PreferenceControl
-              label="Voice Assistance"
-              description="Enable spoken text & audio guidance for activities"
+              label={t('voiceAssistance')}
+              description={t('voiceAssistanceDesc')}
               value={preferences.voiceAssistance}
               options={[
                 { label: 'ON', value: 'ON' },
@@ -302,8 +293,8 @@ function CaregiverManage() {
             />
 
             <PreferenceControl
-              label="Large Text"
-              description="Use enlarged typography & high-contrast cards"
+              label={t('largeText')}
+              description={t('largeTextDesc')}
               value={preferences.largeText}
               options={[
                 { label: 'ON', value: 'ON' },
@@ -323,7 +314,7 @@ function CaregiverManage() {
             className="btn btn-primary btn-full save-changes-btn"
             onClick={handleSaveChanges}
           >
-            Save Changes
+            {t('saveChanges')}
           </button>
         </div>
 
@@ -342,3 +333,4 @@ function CaregiverManage() {
 }
 
 export default CaregiverManage
+

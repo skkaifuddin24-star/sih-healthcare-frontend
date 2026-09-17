@@ -1,45 +1,47 @@
 import { useNavigate } from 'react-router-dom'
 import GameCard from '../components/GameCard.jsx'
+import { useLanguage } from '../context/LanguageContext.jsx'
 import '../styles/dashboard.css'
 import '../styles/games.css'
 
-const GAMES = [
-  {
-    id: 'memory',
-    icon: '🧠',
-    name: 'Memory Match',
-    description: 'Match the same objects and exercise your memory.',
-    difficulty: 'Easy',
-    path: '/games/memory',
-  },
-  {
-    id: 'pattern',
-    icon: '🧩',
-    name: 'Pattern Recognition',
-    description: 'Find the pattern and choose what comes next.',
-    difficulty: 'Easy',
-    path: '/games/pattern',
-  },
-  {
-    id: 'object',
-    icon: '👁️',
-    name: 'Object Recognition',
-    description: 'Identify familiar objects from everyday life.',
-    difficulty: 'Easy',
-    path: '/games/object',
-  },
-  {
-    id: 'routine',
-    icon: '🗓️',
-    name: 'Routine Recall',
-    description: 'Remember the correct order of your daily activities.',
-    difficulty: 'Easy',
-    path: '/games/routine',
-  },
-]
-
 function Games() {
   const navigate = useNavigate()
+  const { t } = useLanguage()
+
+  const games = [
+    {
+      id: 'memory',
+      icon: '🧠',
+      name: t('memoryMatch'),
+      description: t('memoryMatchDesc'),
+      difficulty: t('easy'),
+      path: '/games/memory',
+    },
+    {
+      id: 'pattern',
+      icon: '🧩',
+      name: t('patternRecognition'),
+      description: t('patternRecognitionDesc'),
+      difficulty: t('easy'),
+      path: '/games/pattern',
+    },
+    {
+      id: 'object',
+      icon: '👁️',
+      name: t('objectRecognition'),
+      description: t('objectRecognitionDesc'),
+      difficulty: t('easy'),
+      path: '/games/object',
+    },
+    {
+      id: 'routine',
+      icon: '🗓️',
+      name: t('routineRecall'),
+      description: t('routineRecallDesc'),
+      difficulty: t('easy'),
+      path: '/games/routine',
+    },
+  ]
 
   return (
     <div className="dash-page">
@@ -49,16 +51,16 @@ function Games() {
             type="button"
             className="back-btn"
             onClick={() => navigate('/patient')}
-            aria-label="Back to dashboard"
+            aria-label={t('backToDashboard')}
           >
-            ← Back
+            {t('backToDashboard')}
           </button>
-          <h1 className="dash-greeting">Cognitive Activities</h1>
-          <p className="dash-subtext">Choose an activity for today</p>
+          <h1 className="dash-greeting">{t('cognitiveActivities')}</h1>
+          <p className="dash-subtext">{t('chooseActivity')}</p>
         </div>
 
         <div className="game-card-grid">
-          {GAMES.map((game) => (
+          {games.map((game) => (
             <GameCard
               key={game.id}
               icon={game.icon}
@@ -75,3 +77,4 @@ function Games() {
 }
 
 export default Games
+
